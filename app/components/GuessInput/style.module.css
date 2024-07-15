@@ -1,20 +1,20 @@
-.playerInput {
+.guessInput {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .playerInput input {
+  .guessInput input {
     padding: 10px;
     margin: 10px 0;
   }
-  .playerInput button {
+  .guessInput button {
     padding: 10px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
   }
-  .playerInput button:hover {
-    background-color: #218838;
+  .guessInput button:hover {
+    background-color: #0056b3;
   }
   

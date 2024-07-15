@@ -1,0 +1,11 @@
+.scoreboard {
+    margin: 20px 0;
+  }
+  .scoreboard ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .scoreboard li {
+    margin: 5px 0;
+  }
+  

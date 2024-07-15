@@ -1,0 +1,21 @@
+.helpLetters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .helpLetters button {
+    padding: 10px;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  .helpLetters button:hover {
+    background-color: #cc9900;
+  }
+  .helpLetters p {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
