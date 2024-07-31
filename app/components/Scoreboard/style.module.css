@@ -1,11 +1,49 @@
 .scoreboard {
-    margin: 20px 0;
-  }
-  .scoreboard ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  .scoreboard li {
-    margin: 5px 0;
-  }
-  
+  background-color: #f4f4f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.message {
+  color: #555;
+  font-size: 18px;
+  text-align: center;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.listItem {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listItem:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.playerName {
+  font-weight: bold;
+}
+
+.score {
+  color: #007bff;
+}
