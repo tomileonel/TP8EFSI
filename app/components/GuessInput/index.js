@@ -14,6 +14,8 @@ const GuessInput = ({ handleGuess }) => {
     <form onSubmit={handleSubmit} className={styles.guessInput}>
       <input
         type="text"
+        id="guess"
+        name="guess"
         value={guess}
         onChange={(e) => setGuess(e.target.value)}
         placeholder="Enter country name"

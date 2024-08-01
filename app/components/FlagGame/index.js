@@ -21,41 +21,40 @@ const FlagGame = () => {
   const [scores, setScores] = useState([]);
   const [totalFlags, setTotalFlags] = useState(2);
   const [flagsRemaining, setFlagsRemaining] = useState(2);
-  const [previousCountry, setPreviousCountry] = useState(null);
 
   useEffect(() => {
-    fetch('https://countriesnow.space/api/v0.1/countries/flag/images')
-      .then(response => response.json())
-      .then(data => {
-        const shuffledCountries = data.data.sort(() => 0.5 - Math.random()).slice(0, totalFlags);
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://countriesnow.space/api/v0.1/countries/flag/images');
+        const data = await response.json();
+        const shuffledCountries = data.data.sort(() => 0.5 - Math.random());
         setCountries(shuffledCountries);
-        selectRandomCountry(shuffledCountries);
-      });
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+
+    fetchCountries();
 
     if (typeof window !== 'undefined') {
       const storedScores = JSON.parse(localStorage.getItem('scores')) || [];
       setScores(storedScores);
     }
-  }, [totalFlags]);
+  }, []);
 
-  const selectRandomCountry = (countries) => {
-    if (flagsRemaining <= 0) {
+  const selectRandomCountry = () => {
+    let availableCountries = countries.filter(country => !playedCountries.includes(country.name));
+    if (availableCountries.length === 0) {
       endGame();
       return;
     }
+    const randomCountry = availableCountries[Math.floor(Math.random() * availableCountries.length)];
 
-    let randomCountry;
-    do {
-      randomCountry = countries[Math.floor(Math.random() * countries.length)];
-    } while (playedCountries.includes(randomCountry));
-
-    setPreviousCountry(currentCountry);
-    setPlayedCountries([...playedCountries, randomCountry]);
+    setPlayedCountries(prevPlayed => [...prevPlayed, randomCountry.name]);
     setCurrentCountry(randomCountry);
     setHelpLetters('');
     setHelpUsed(false);
     setTimeLeft(15);
-    setFlagsRemaining(prevFlags => prevFlags - 1);
   };
 
   const generateHelpLetters = (countryName) => {
@@ -79,9 +78,11 @@ const FlagGame = () => {
     if (guess.toLowerCase() === currentCountry.name.toLowerCase()) {
       const points = 10 + timeLeft;
       setScore(prevScore => prevScore + points);
-      selectRandomCountry(countries);
+      setFlagsRemaining(prevFlags => prevFlags - 1);
     } else {
       alert(`Incorrect!`);
+      setScore(prevScore => prevScore - 1);
+
     }
   };
 
@@ -94,7 +95,7 @@ const FlagGame = () => {
   const handleTimeUp = () => {
     setScore(prevScore => prevScore - 5);
     alert(`Time's up! The flag was ${currentCountry.name}.`);
-    selectRandomCountry(countries);
+    setFlagsRemaining(prevFlags => prevFlags - 1);
   };
 
   const startGame = (name, flagsCount) => {
@@ -102,33 +103,42 @@ const FlagGame = () => {
     setTotalFlags(flagsCount);
     setFlagsRemaining(flagsCount);
     setGameStarted(true);
+    setPlayedCountries([]);
+    setScore(0);
+    setCurrentCountry(null);
     localStorage.setItem('playerName', name);
   };
 
   const endGame = () => {
-    if (currentCountry && timeLeft > 0) {
-      const finalScore = score;
-      setScores(prevScores => {
-        const updatedScores = [...prevScores, { player: playerName, score: finalScore }];
-        localStorage.setItem('scores', JSON.stringify(updatedScores));
-        return updatedScores;
-      });
+    const finalScore = score;
+    setScores(prevScores => {
+      const updatedScores = [...prevScores, { player: playerName, score: finalScore }];
+      localStorage.setItem('scores', JSON.stringify(updatedScores));
+      return updatedScores;
+    });
 
-      alert(`Game Over! ${playerName}, your final score is ${finalScore}`);
+    alert(`Game Over! ${playerName}, your final score is ${finalScore}`);
 
-      setGameStarted(false);
-      setPlayedCountries([]);
-      setScore(0);
-      setCurrentCountry(null);
-      setFlagsRemaining(0);
-    }
+    setGameStarted(false);
+    setPlayedCountries([]);
+    setScore(0);
+    setCurrentCountry(null);
+    setFlagsRemaining(totalFlags);
   };
 
   useEffect(() => {
-    if (flagsRemaining <= 0 && currentCountry === null) {
+    if (flagsRemaining === 0 && gameStarted) {
       endGame();
+    } else if (flagsRemaining > 0 && gameStarted) {
+      selectRandomCountry();
     }
-  }, [flagsRemaining, currentCountry]);
+  }, [flagsRemaining, gameStarted]);
+
+  useEffect(() => {
+    if (gameStarted && countries.length > 0) {
+      selectRandomCountry();
+    }
+  }, [gameStarted, countries]);
 
   return (
     <div className={styles.flagGame}>

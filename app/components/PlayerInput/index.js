@@ -18,6 +18,8 @@ const PlayerInput = ({ setPlayerName }) => {
     <form onSubmit={handleSubmit} className={styles.playerInput}>
       <input
         type="text"
+        id="playerName"
+        name="playerName"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter your name"
@@ -25,6 +27,8 @@ const PlayerInput = ({ setPlayerName }) => {
       />
       <input
         type="number"
+        id="flagsCount"
+        name="flagsCount"
         value={flagsCount}
         onChange={(e) => setFlagsCount(Number(e.target.value))}
         min="1"

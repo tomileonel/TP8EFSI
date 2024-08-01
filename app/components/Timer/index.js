@@ -21,3 +21,4 @@ const Timer = ({ timeLeft, setTimeLeft, onTimeUp }) => {
 };
 
 export default Timer;
+
