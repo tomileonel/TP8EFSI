@@ -1,5 +1,6 @@
 .score {
-    margin: 20px 0;
-    font-size: 24px;
-  }
-  
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333; 
+  font-weight: bold;
+}

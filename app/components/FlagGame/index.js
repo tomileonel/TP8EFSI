@@ -124,6 +124,8 @@ const FlagGame = () => {
     setScore(0);
     setCurrentCountry(null);
     setFlagsRemaining(totalFlags);
+    window.location.reload();
+
   };
 
   useEffect(() => {

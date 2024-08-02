@@ -3,7 +3,7 @@ import styles from './style.module.css';
 
 const PlayerInput = ({ setPlayerName }) => {
   const [name, setName] = useState('');
-  const [flagsCount, setFlagsCount] = useState(2); // Default to 2 flags
+  const [flagsCount, setFlagsCount] = useState(2); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +16,7 @@ const PlayerInput = ({ setPlayerName }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.playerInput}>
+      <div className={styles.message}>Enter your name and select the number of flags to start:</div>
       <input
         type="text"
         id="playerName"

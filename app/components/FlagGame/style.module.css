@@ -1,6 +1,19 @@
 .flagGame {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+  display: flex;
+height: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flagGame > * {
+  margin: 10px 0;
+}
+
+.flagGame p {
+  font-size: 18px;
+  color: #333; 
+}

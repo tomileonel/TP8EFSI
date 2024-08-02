@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './style.module.css';
 
 const Scoreboard = () => {
@@ -9,14 +9,16 @@ const Scoreboard = () => {
     const storedScores = localStorage.getItem('scores');
     if (storedScores) {
       const parsedScores = JSON.parse(storedScores);
-      setScores(parsedScores);
+      const sortedScores = parsedScores.sort((a, b) => b.score - a.score);
+      setScores(sortedScores);
     } else {
       setScores([]);
     }
   }, []);
 
-  const hasScores = scores && scores.length > 0;
+  const hasScores = scores.length > 0;
   const hasEmptyScores = hasScores && scores.some(entry => entry.score === "");
+  console.log(scores)
 
   return (
     <div className={styles.scoreboard}>
@@ -25,7 +27,7 @@ const Scoreboard = () => {
         <p className={styles.message}>No has terminado la partida</p>
       ) : hasScores ? (
         <ul className={styles.list}>
-          {scores.map((entry, index) => (
+          {scores.slice(0, 5).map((entry, index) => (
             <li key={index} className={styles.listItem}>
               <span className={styles.playerName}>{entry.player}:</span>
               <span className={styles.score}>{entry.score}</span>
@@ -40,3 +42,4 @@ const Scoreboard = () => {
 };
 
 export default Scoreboard;
+
