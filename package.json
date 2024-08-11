@@ -1,8 +1,11 @@
 {
   "name": "tp8efsi",
   "version": "0.1.0",
+  "homepage": "https://tomileonel.github.io/TP08Banderas",
   "private": true,
   "scripts": {
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
